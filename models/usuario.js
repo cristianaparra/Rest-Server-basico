@@ -6,16 +6,16 @@ const { Schema, model}= require('mongoose')
 const UsuarioSchema= Schema({
     nombre:{
         type: String,
-        require:[ture, 'El nombre es obligatorio']
+        require:[true, 'El nombre es obligatorio']
     },
     correo:{
         type: String,
-        require:[ture, 'El correo es obligatorio'],
+        require:[true, 'El correo es obligatorio'],
         unique: true
     },
     password:{
         type: String,
-        require:[ture, 'La contraseña es obligatorio']
+        require:[true, 'La contraseña es obligatorio']
     },
     url:{
         type: String

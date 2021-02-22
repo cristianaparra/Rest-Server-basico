@@ -2,6 +2,7 @@ const { response, request } = require("express");
 const bcryptjs = require("bcryptjs");
 const Usuario = require("../models/usuario");
 
+
 const usuariosGet = (req = request, res = response) => {
   const { id, q } = req.query;
 
@@ -12,13 +13,14 @@ const usuariosGet = (req = request, res = response) => {
   });
 };
 const usuariosPost = async (req, res = response) => {
+
+ 
   const { nombre, correo, password, rol } = req.body;
   const usuario = new Usuario({ nombre, correo, password, rol });
 
-  // verificar si correo existe
 
   //encriptar la pass
-  let salt = bcryptjs.genSaltSync();
+  const salt = bcryptjs.genSaltSync();
   usuario.password = bcryptjs.hashSync(password, salt);
 
   //guardar en BD
@@ -30,7 +32,6 @@ const usuariosPost = async (req, res = response) => {
   });
 };
 
-
 const usuariosPut = (req, res = response) => {
   const { id } = req.params;
   res.json({
@@ -39,13 +40,11 @@ const usuariosPut = (req, res = response) => {
   });
 };
 
-
 const usuariosPatch = (req, res = response) => {
   res.json({
     msg: "patch api - controlador",
   });
 };
-
 
 const usuariosDelete = (req, res = response) => {
   res.json({

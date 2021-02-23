@@ -14,7 +14,9 @@ const {
 const router = Router();
 
 router.get("/", usuariosGet);
+
 router.put("/:id", usuariosPut);
+
 router.post(
   "/",
   [
@@ -30,7 +32,9 @@ router.post(
   ],
   usuariosPost
 );
+
 router.patch("/", usuariosPatch);
+
 router.delete("/", usuariosDelete);
 
 module.exports = router;

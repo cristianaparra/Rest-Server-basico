@@ -40,7 +40,7 @@ class Server {
 
   listen() {
     this.app.listen(this.port, () => {
-      "Servidor funcionando", this.port;
+      console.log("Servidor funcionando", this.port);
     });
   }
 }

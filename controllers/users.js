@@ -2,13 +2,15 @@ const { response, request } = require("express");
 const bcryptjs = require("bcryptjs");
 const Usuario = require("../models/usuario");
 
-const usuariosGet = (req = request, res = response) => {
-  const { id, q } = req.query;
+const usuariosGet = async (req = request, res = response) => {
+  // const { id, q } = req.query;
+  const { limite = 5, desde = 0 } = req.query;
+  const usuarios = await Usuario.find()
+    .skip(Number(desde))
+    .limit(Number(limite))
 
   res.json({
-    msg: "get api - controlador",
-    id,
-    q,
+    usuarios,
   });
 };
 const usuariosPost = async (req, res = response) => {
@@ -24,13 +26,13 @@ const usuariosPost = async (req, res = response) => {
   await usuario.save();
 
   res.json({
-    usuario
+    usuario,
   });
 };
 
 const usuariosPut = async (req, res = response) => {
   const { id } = req.params;
-  const { _id,password, google, correo, ...resto } = req.body;
+  const { _id, password, google, correo, ...resto } = req.body;
 
   //validar contra BD
   if (password) {
@@ -40,11 +42,7 @@ const usuariosPut = async (req, res = response) => {
 
   const usuario = await Usuario.findByIdAndUpdate(id, resto);
 
-
-  res.json({
-    msg: "put api - controlador",
-    usuario
-  });
+  res.json(usuario);
 };
 
 const usuariosPatch = (req, res = response) => {

@@ -15,7 +15,15 @@ const esEmailValido = async (correo = "") => {
       }
 };
 
+const esIdValido = async (id) => {
+  const existeUsuario = await Usuario.findById( id );
+  if (!existeUsuario) {
+      throw new Error(`El id ${id} no esta registrado en la Base de Datos`);
+      }
+};
+
 module.exports = {
   esRolValido,
-  esEmailValido
+  esEmailValido,
+  esIdValido
 };

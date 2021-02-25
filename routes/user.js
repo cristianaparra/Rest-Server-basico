@@ -40,6 +40,11 @@ router.post(
 
 router.patch("/", usuariosPatch);
 
-router.delete("/", usuariosDelete);
+router.delete("/:id",[
+
+  check('id', 'no es un id vaildo').isMongoId(),
+ check('id').custom(esIdValido),
+ validarCampos
+] ,usuariosDelete);
 
 module.exports = router;

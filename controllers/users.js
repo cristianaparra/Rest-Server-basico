@@ -62,15 +62,13 @@ const usuariosDelete = async(req, res = response) => {
   
   const {id} =  req.params
 
-  const uid = req.uid
-  //borrar fisicamento no recomendado
 
-  // const usuario = await Usuario.findByIdAndDelete(id)
 
   const usuario = await Usuario.findByIdAndUpdate(id,{estado:false})
-  
+
   res.json(
-  usuario)
+    usuario
+  )
 };
 
 module.exports = {

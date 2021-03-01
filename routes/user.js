@@ -3,7 +3,14 @@ const { check } = require("express-validator");
 
 const { validarCampos } = require("../middlewares/validar-campos");
 const { validarJwt } = require("../middlewares/validar-jwt");
-const { esRolValido, esEmailValido,esIdValido } = require("../helpers/db-validators");
+const { esAdminRole } = require("../middlewares/validar-roles");
+
+const {
+  esRolValido,
+  esEmailValido,
+  esIdValido,
+} = require("../helpers/db-validators");
+
 const {
   usuariosGet,
   usuariosPost,
@@ -16,12 +23,16 @@ const router = Router();
 
 router.get("/", usuariosGet);
 
-router.put("/:id",[
- check('id', 'no es un id vaildo').isMongoId(),
- check('id').custom(esIdValido),
- check("rol").custom(esRolValido),
- validarCampos 
-], usuariosPut);
+router.put(
+  "/:id",
+  [
+    check("id", "no es un id vaildo").isMongoId(),
+    check("id").custom(esIdValido),
+    check("rol").custom(esRolValido),
+    validarCampos,
+  ],
+  usuariosPut
+);
 
 router.post(
   "/",
@@ -41,11 +52,16 @@ router.post(
 
 router.patch("/", usuariosPatch);
 
-router.delete("/:id",[
-  validarJwt,
-  check('id', 'no es un id vaildo').isMongoId(),
- check('id').custom(esIdValido),
- validarCampos
-] ,usuariosDelete);
+router.delete(
+  "/:id",
+  [
+    validarJwt,
+    esAdminRole,
+    check("id", "no es un id vaildo").isMongoId(),
+    check("id").custom(esIdValido),
+    validarCampos,
+  ],
+  usuariosDelete
+);
 
 module.exports = router;

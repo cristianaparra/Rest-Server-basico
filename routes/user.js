@@ -1,9 +1,12 @@
 const { Router } = require("express");
 const { check } = require("express-validator");
 
-const { validarCampos } = require("../middlewares/validar-campos");
-const { validarJwt } = require("../middlewares/validar-jwt");
-const { esAdminRole, tieneRole } = require("../middlewares/validar-roles");
+const {
+  esAdminRole,
+  tieneRole,
+  validarJWT,
+  validarCampos,
+} = require("../middlewares");
 
 const {
   esRolValido,
@@ -55,9 +58,9 @@ router.patch("/", usuariosPatch);
 router.delete(
   "/:id",
   [
-    validarJwt,
+    validarJWT,
     esAdminRole, // tiene que ser admin
-    tieneRole("VENTA_ROL","USER_ROL","OTROS_ROL"), // puede ser cualquier rol que necesite
+    tieneRole("VENTA_ROL", "USER_ROL", "OTROS_ROL"), // puede ser cualquier rol que necesite
     check("id", "no es un id vaildo").isMongoId(),
     check("id").custom(esIdValido),
     validarCampos,

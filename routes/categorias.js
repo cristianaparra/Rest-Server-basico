@@ -13,6 +13,7 @@ router.get("/", (req, res) => {
   res.json("get");
 });
 // obtener una categoria por id - publico
+//hacer validacion midelwate personalizado con custom
 router.get("/:id", (req, res) => {
   res.json("get - ID");
 });
